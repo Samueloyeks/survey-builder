@@ -20,11 +20,11 @@
         <div v-else>
           <div class="flex flex-row">
             <div
-              v-for="scale of LIKERT_SCALE"
+              v-for="(scale, index) of LIKERT_SCALE"
               @click="handleLikertResponseChange(scale.value)"
               :key="scale.value"
-              :class="{ 'bg-white text-black': scale.value === question?.answer }"
-              class="block max-w border px-5 mr-3 mt-5 border-gray-200 rounded-lg bg-gray-800 inline cursor-pointer"
+              :style="getScaleStyles(index)"
+              class="block max-w border px-5 mr-3 mt-5 border-gray-200 rounded-lg inline cursor-pointer"
             >
               {{ scale.value }}
             </div>
@@ -41,11 +41,11 @@ import { useQuestions } from '@/composables/question'
 import debounce from 'lodash.debounce'
 
 const LIKERT_SCALE = [
-  { value: 1, color: 'red' },
-  { value: 2, color: 'red' },
-  { value: 3, color: 'amber' },
-  { value: 4, color: 'red' },
-  { value: 5, color: 'green' }
+  { value: 1, background: '#ff0000', color: 'white' },
+  { value: 2, background: '#ffa700', color: 'white' },
+  { value: 3, background: '#fff400', color: 'grey' },
+  { value: 4, background: '#a3ff00', color: 'grey' },
+  { value: 5, background: '#2cba00', color: 'white' }
 ]
 const INPUT_DEBOUNCE = 700
 
@@ -81,8 +81,19 @@ onBeforeUnmount(() => {
 watch(
   () => props.question?.answer,
   (newVal) => {
-    console.log(newVal)
     question.value = { ...props.question, answer: newVal }
   }
 )
+
+const getScaleStyles = (index) => {
+  const scale = LIKERT_SCALE[index]
+
+  if (scale?.value === question?.value?.answer) {
+    return {
+      backgroundColor: 'white',
+      color: 'gray'
+    }
+  }
+  return { backgroundColor: scale.background, color: scale.color }
+}
 </script>

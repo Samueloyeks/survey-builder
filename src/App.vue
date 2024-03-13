@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col md:flex-row">
-    <div class="bg-black sticky top-0 md:h-screen w-full md:w-2/3 z-1">
+    <div class="bg-gray-800 sticky top-0 md:h-screen w-full md:w-2/3 z-1">
       <QuestionForm />
     </div>
 
